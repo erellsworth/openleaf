@@ -2,6 +2,7 @@ import { DataTypes, Model, ModelAttributes, Optional } from "sequelize";
 import { MarketInterface, MarketQuery } from "~/interfaces/Market.interface";
 import { PaginatedResults } from "~/interfaces/Misc.interface";
 import { db } from '../utils/db';
+import { GenreModel } from "./Genre";
 
 interface creationAttributes extends Optional<MarketInterface, "id"> { Tag: any }
 
@@ -37,30 +38,31 @@ const attributes: ModelAttributes<Instance, MarketInterface> = {
     stats: {
         type: DataTypes.JSON
     },
-    isPro: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: 0
-    },
     isPaying: {
         type: DataTypes.BOOLEAN,
-        defaultValue: 0
+        defaultValue: false
     },
     reprints: {
         type: DataTypes.BOOLEAN,
-        defaultValue: 0
+        defaultValue: false
     },
     multipleSubs: {
         type: DataTypes.BOOLEAN,
-        defaultValue: 0
+        defaultValue: false
     },
     simultaneousSubs: {
         type: DataTypes.BOOLEAN,
-        defaultValue: 0
+        defaultValue: false
     },
     // standard attributes:
+    slug: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
     id: {
         primaryKey: true,
-        type: DataTypes.INTEGER.UNSIGNED,
+        type: DataTypes.INTEGER,
+        autoIncrement: true
     },
     createdAt: {
         type: DataTypes.DATE,
@@ -86,11 +88,12 @@ const Market = {
         const offset = (parseInt(page.toString()) - 1) * limit;
 
         const { count, rows } = await MarketModel.findAndCountAll({
-            order: [['name', 'DESC']],
+            order: [['name', 'ASC']],
             limit,
             logging: false,
             distinct: true,
-            offset
+            offset,
+            include: GenreModel
         });
 
         return {
@@ -105,7 +108,8 @@ const Market = {
             where: {
                 slug,
             },
-            logging: false
+            logging: false,
+            include: GenreModel
         }) as unknown as MarketInterface;
 
         return content;

@@ -6,8 +6,13 @@ export interface SubmissionOptions {
         display: string;
         min: number;
         max: number;
+        unit: string;
     };
-    pay: string;
+    pay: {
+        advance: boolean;
+        royalties: boolean;
+        display: string;
+    };
 }
 
 export interface MarketInterface extends BaseInterface {
@@ -17,7 +22,6 @@ export interface MarketInterface extends BaseInterface {
     guidelines?: string;
     submissionOptions: SubmissionOptions[];
     stats: any;
-    isPro: boolean;
     isPaying: boolean;
     reprints: boolean;
     multipleSubs: boolean;
