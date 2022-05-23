@@ -1,10 +1,10 @@
 import { Response } from "express"
 import { ApiResponse } from "~/interfaces/Misc.interface";
 
-export const successResponse = async (res: Response, data: any) => {
+export const successResponse = async <T>(res: Response, data: T) => {
 
     if (data) {
-        const response: ApiResponse = {
+        const response: ApiResponse<T> = {
             success: Boolean(data),
             data
         };

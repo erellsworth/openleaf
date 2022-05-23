@@ -83,7 +83,7 @@ const attributes: ModelAttributes<Instance, MarketInterface> = {
 const MarketModel = db.define<Instance>('Market', attributes);
 
 const Market = {
-    findAll: async (query: MarketQuery): Promise<PaginatedResults> => {
+    findAll: async (query: MarketQuery): Promise<PaginatedResults<MarketInterface>> => {
         const { limit, page } = query;
         const offset = (parseInt(page.toString()) - 1) * limit;
 

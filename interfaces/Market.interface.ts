@@ -1,4 +1,5 @@
 import { BaseInterface, BaseQuery } from "./Base.interface";
+import { PaginatedResults } from "./Misc.interface";
 
 export interface SubmissionOptions {
     type: string;
@@ -31,3 +32,5 @@ export interface MarketInterface extends BaseInterface {
 export interface MarketQuery extends BaseQuery {
 
 }
+
+export type MarketResponse = MarketInterface | PaginatedResults<MarketInterface>;

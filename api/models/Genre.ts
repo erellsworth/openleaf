@@ -1,6 +1,6 @@
 import { DataTypes, Model, ModelAttributes, Optional } from "sequelize";
 import { BaseQuery } from "~/interfaces/Base.interface";
-import { GenreInterface } from "~/interfaces/Genre.interface";
+import { GenreInterface, GenreResponse } from "~/interfaces/Genre.interface";
 import { PaginatedResults } from "~/interfaces/Misc.interface";
 import { db } from '../utils/db';
 
@@ -44,7 +44,7 @@ const attributes: ModelAttributes<Instance, GenreInterface> = {
 const GenreModel = db.define<Instance>('Genre', attributes);
 
 const Genre = {
-    findAll: async (query: BaseQuery): Promise<PaginatedResults> => {
+    findAll: async (query: BaseQuery): Promise<GenreResponse> => {
         const { limit, page } = query;
         const offset = (parseInt(page.toString()) - 1) * limit;
 

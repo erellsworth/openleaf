@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import { MarketInterface, MarketQuery } from "~/interfaces/Market.interface";
+import { MarketInterface, MarketQuery, MarketResponse } from "~/interfaces/Market.interface";
 import { PaginatedResults } from "~/interfaces/Misc.interface";
 import { Market } from "../models";
 import { notFoundResponse, successResponse } from "../utils/responses";
@@ -7,7 +7,7 @@ import marketRouter from "./router";
 
 marketRouter.get('/markets/:slug?', async (req: Request, res: Response) => {
 
-    let results: MarketInterface | PaginatedResults;
+    let results: MarketResponse;
 
     const { slug } = req.params;
 
@@ -24,7 +24,7 @@ marketRouter.get('/markets/:slug?', async (req: Request, res: Response) => {
     }
 
     if (results) {
-        successResponse(res, results);
+        successResponse<MarketResponse>(res, results);
     } else {
         notFoundResponse(res);
     }

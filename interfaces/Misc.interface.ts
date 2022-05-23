@@ -1,12 +1,12 @@
-export interface PaginatedResults {
-    contents: unknown[];
+export interface PaginatedResults<T> {
+    contents: T[];
     total: number;
     page: number;
 }
 
-export interface ApiResponse {
+export interface ApiResponse<T=void> {
     success: boolean;
-    data?: any;
+    data?: T;
     error?: {
         message: string;
         code: number;
